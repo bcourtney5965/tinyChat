@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Chat from './Chat.js';
 import Message from './Message.js';
 import axios from 'axios';
 

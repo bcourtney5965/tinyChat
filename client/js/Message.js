@@ -6,11 +6,11 @@ class Message extends Component {
   }
   render() {
     return (
-      <div id="chat">
+      <div id="allmessages">
         {
           this.props.messages.map((message, key) => {
             return ( 
-              <div key={key} id={key} className="message">
+              <div key={key} id={`message${key}`} className="message">
                 <div className="author">{message.author}</div>
                 <div className="content">{message.content}</div>
               </div>

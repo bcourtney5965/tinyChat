@@ -12,8 +12,16 @@ body {
   padding: 5px;
 }
 
-#chat {
+#allmessages {
   background-color: blue;
   margin: 20px;
+  border: 1px solid black;
+}
+
+.message {
+  background-color: green;
+  margin: 7px;
+  padding: 10px;
+  padding-left: 10px;
   border: 1px solid black;
 }
