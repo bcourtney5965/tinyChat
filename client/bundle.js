@@ -21517,7 +21517,8 @@
 	    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
 	    _this.state = {
-	      messages: []
+	      messages: [],
+	      newMessage: ""
 	    };
 	    return _this;
 	  }
@@ -21537,12 +21538,59 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      console.log('handleMessage');
+	      var newMessage = this.state.newMessage.trim();
+	      if (!newMessage) {
+	        return;
+	      }
+
+	      var dataToSend = { "newMessage": newMessage };
+	      // $.post('/message', dataToSend, function(response) {
+	      //   console.log('response = ', response);
+	      // });
+
+	      _axios2.default.post('/message', dataToSend).then(function (response) {
+	        console.log(response);
+	      }).catch(function (error) {
+	        console.log(error);
+	      });
+
+	      this.setState({
+	        newMessage: ''
+	      });
+	    }
+	  }, {
+	    key: 'updateState',
+	    value: function updateState(field, event) {
+	      console.log('updateState');
+	      var object = {};
+	      object[field] = event.target.value;
+	      this.setState(object);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'container', className: 'center-block col-lg-4' },
-	        _react2.default.createElement(_Message2.default, { messages: this.state.messages })
+	        _react2.default.createElement(_Message2.default, { messages: this.state.messages }),
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit.bind(this) },
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            value: this.state.newMessage,
+	            placeholder: 'type message here',
+	            onChange: this.updateState.bind(this, 'newMessage')
+	          }),
+	          _react2.default.createElement('input', {
+	            type: 'submit',
+	            value: 'Submit'
+	          })
+	        )
 	      );
 	    }
 	  }]);
