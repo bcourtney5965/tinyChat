@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Chat from './Chat.js';
+import Message from './Message.js';
 import axios from 'axios';
 
 class Main extends Component {
@@ -28,7 +29,7 @@ class Main extends Component {
   render() {
     return (
       <div id="container" className="center-block col-lg-4">
-        <Chat />
+        <Message messages={this.state.messages} />
       </div>
     )
   }
