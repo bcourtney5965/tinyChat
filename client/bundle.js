@@ -21600,9 +21600,6 @@
 	      object[field] = event.target.value;
 	      this.setState(object);
 	    }
-
-	    // col-md-4 center-block container
-
 	  }, {
 	    key: 'render',
 	    value: function render() {
