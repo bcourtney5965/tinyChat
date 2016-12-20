@@ -1,49 +1,25 @@
-# README
-
-Hello!
-
-As the next step in the AeroFS recruiting process, we'd like you to do a
-take-home development exercise. This exercise should take no longer than a
-couple hours for the basic requirements.
-
-Please send us back your results within the next two weeks--if you've got
-travel or something else coming up and this timetable doesn't work for you,
-just let us know and we'll push that back further.
-
-Good luck, and we hope you have fun with this!
-
 ## What files live where
 
 * `frontend_design_spec.md` has a copy of the information/requirements for this
   exercise.
-* `backend_design_spec.md` should contain the spec for what you want the
-  backend developer to build so that your frontend demo app would actually work
-  someday. Once you have your app more or less working, you'll need to write
-  this.
-* `index.html` is your main HTML page. 
-* Your JS code goes in `/j`s. There's an app.js file in there already to get
-  you started. Any libraries you use as dependencies can go in `/libs` (if not
-  linked via a CDN). Your index.html file already includes Twitter Bootstrap
-  and JQuery, to start.
-* Your stylesheets go in `/style`s. There's a `style.cs`s file in there already
-  to get you started. If you'd like to use a CSS preprocessor like SCSS or
-  LESS, great! Make sure to include the original SCSS/LESS file(s), not just
-  compiled CSS, when you send your code back so we can see them.
-* `/fixtures` contains a fake data file, `fakedata.json`, to help you get
-  started.
-
-If you'd rather organize your code differently, go for it. Just update this
-README file accordingly.
+* `backend_design_spec.md` contains the spec for what I'd like the
+  backend developer to build so that my frontend demo app will work someday.
+* `index.html` is my main HTML page, I altered it to accommodate  Reactjs and socket.io. 
+* My JS code is in `/j`s. The Main.js file holds the top level component, the index.js renders the react app to the DOM, and Message.js accounts for messages that were created prior to joining the chat.  
+* My stylesheets are in `/style`s. 
+* `/fixtures` contains a fake data file, `fakedata.json`.
+* I have webpack bundling my files and inserting a bundle.js file in the client directory.
+* server.js is my basic node server.  It is serving the react app, working with socket.io, and is where routes could begin to be built out - I've included comments saying as much.
 
 ## Viewing the app for development
 
-If your computer has Python installed, an easy way to get this frontend-only
-app up and running is to cd into this directory in your terminal window, then
-run:
+npm install
+webpack -w
+nodemon server.js
 
-    python -m SimpleHTTPServer 8080
+## Misc. extras
 
-This will start a basic web server serving the contents of this directory on
-your machine. You can then see index.html at localhost:8080.
+* tinyChat works in Firefox, Chrome and Safari
+* Users can specify their name
+* There is "realtime" checking for new messages from other users, via socket.io.  
 
-If you'd rather serve your app for development in a different way, go for it.

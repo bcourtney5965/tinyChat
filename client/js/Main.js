@@ -8,17 +8,43 @@ class Main extends Component {
     super(props);
     this.state = {
       messages: [],
-      newMessage: ""
+      newMessage: '',
+      author: ''
     }
   }
 
   componentDidMount() {
-    axios.get('../fixtures/fakedata.json')
+    let socket = io();
+    this.getMessages();
+    socket.on('chat message', function(msg){
+      let allmessages = document.getElementById('allmessages');
+      let newMessage = document.createElement('div');
+      let bold = document.createElement('b');
+      let authorDiv = document.createElement('div');
+      let contentDiv = document.createElement('div');
+
+      newMessage.classList.add('message');
+      authorDiv.classList.add('author');
+      contentDiv.classList.add('content');
+
+      bold.innerHTML = msg.author;
+      contentDiv.innerHTML = msg.content;
+
+      authorDiv.appendChild(bold);
+      newMessage.appendChild(authorDiv);
+      newMessage.appendChild(contentDiv);
+      allmessages.appendChild(newMessage);
+    });
+  }
+
+  getMessages() {
+    // axios.get('/messages') // for real data
+    axios.get('../fixtures/fakedata.json') // comment this line out when backend is hooked up
       .then(function (res) {
         return res.data.messages;
       })
       .then((messages) => {
-        this.setState({messages, messages})
+        this.setState({messages, messages});
         return messages;
       })
       .catch(function (error) {
@@ -28,35 +54,32 @@ class Main extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('handleMessage');
-    const newMessage = this.state.newMessage.trim();
-    if (!newMessage) {
+    let socket = io();
+
+    const content = this.state.newMessage.trim();
+    const author = this.state.author.trim();
+    const timestamp = new Date().getTime();
+
+    if (!content || !author) {
       return;
     }
 
-    var dataToSend = {"newMessage": newMessage};
-    // $.post('/message', dataToSend, function(response) {
-    //   console.log('response = ', response);
-    // });
+    const message = {
+      'content': content,
+      'author': author,
+      'timestamp': timestamp
+    };
 
-    axios.post('/message', dataToSend)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-
-
-    
+    const dataToSend = {data: message};
+    socket.emit('chat message', message);
+  
     this.setState({
-      newMessage: ''
+      newMessage: '',
+      author: ''
     });
   }
 
   updateState(field, event) {
-    console.log('updateState');
     var object = {};
     object[field] = event.target.value;
     this.setState(object);
@@ -64,22 +87,36 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="container" className="center-block col-lg-4">
+      <div id="container" className="col-md-8 col-md-offset-2">
         <Message messages={this.state.messages} />
-
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form onSubmit={this.handleSubmit.bind(this)} className="form-inline">
+          <div className="form-group">
+            <label htmlFor="message">Message:</label>
+            <input 
+              type="text"
+              value={this.state.newMessage}
+              onChange={this.updateState.bind(this, 'newMessage')} 
+              className="form-control"
+              id="message"
+              placeholder="Enter message"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input 
+              type="text" 
+              value={this.state.author}
+              onChange={this.updateState.bind(this, 'author')} 
+              className="form-control"
+              id="username"
+              placeholder="your name" 
+            />
+          </div>
           <input 
-            type="text" 
-            value={this.state.newMessage}
-            placeholder="type message here" 
-            onChange={this.updateState.bind(this, 'newMessage')} 
-          />
-
-          <input 
+            className="btn btn-primary"
             type="submit" 
             value="Submit" 
           />
-
         </form>
       </div>
     )

@@ -11,7 +11,7 @@ class Message extends Component {
           this.props.messages.map((message, key) => {
             return ( 
               <div key={key} id={`message${key}`} className="message">
-                <div className="author">{message.author}</div>
+                <div className="author"><b>{message.author}</b></div>
                 <div className="content">{message.content}</div>
               </div>
             )

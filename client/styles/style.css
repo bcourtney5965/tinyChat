@@ -1,26 +1,31 @@
 /* Stub CSS file for your tinychat app! */
 
 body {
-    background-color: snow;
-    color: #333;
+  background-color: #1d2120;
+  color: #333;
 }
 
-
 #container {
-  background-color: red;
-  width: 70%;
   padding: 5px;
+  float: none;
+  margin: 0px auto;
+  background-color: #5a5c51;
 }
 
 #allmessages {
-  background-color: blue;
   margin: 20px;
-  border: 1px solid black;
 }
 
 .message {
-  background-color: green;
+  border-radius: 20px;
+  background-color: #bcd5d1;
   margin: 7px;
   padding: 10px;
-  border: 1px solid black;
+}
+
+form {
+  margin: 20px;
+  padding: 15px;
+  background-color: #bcd5d1;
+  border-radius: 20px;
 }
